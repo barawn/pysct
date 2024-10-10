@@ -4,7 +4,10 @@ Python wrapper for Xilinx's XSCT/XSDB console
 This package based on the following requiremets:
  - [Running-SDK-project-in-other-software][1]
  - [Error during control Xilinx XSCT with pexpect][2]
- 
+
+## OSU Changes
+
+1. Removed psutil dependency, it isn't needed. Just use Popen's methods.
  
 ## Example
 

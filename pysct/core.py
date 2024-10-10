@@ -10,7 +10,6 @@ import time
 import socket
 import subprocess
 import signal
-import psutil
 import re
 
 # Import 3th party modules:
@@ -122,12 +121,14 @@ class XsctServer:
         if poll is None:
             logger.debug("The server is alive, let's kill it.")
 
+            # drop the psutil dependency, just use popen's
+            _xsct_server.terminate()
             # Kill all child process the XSCT starts in a terminal.
-            current_process = psutil.Process(self._xsct_server.pid)
-            children = current_process.children(recursive=True)
-            for child in reversed(children):
-                logger.debug("Killing child with pid: %d", child.pid)
-                os.kill(child.pid, signal.SIGTERM)  # or signal.SIGKILL
+#            current_process = psutil.Process(self._xsct_server.pid)
+#            children = current_process.children(recursive=True)
+#            for child in reversed(children):
+#                logger.debug("Killing child with pid: %d", child.pid)
+#                os.kill(child.pid, signal.SIGTERM)  # or signal.SIGKILL
 
             if wait:
                 poll = self._xsct_server.poll()
